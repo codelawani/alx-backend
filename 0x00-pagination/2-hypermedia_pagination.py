@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import csv
-import math
-from typing import List, Tuple
+from typing import Dict, List, Tuple, Union
 
 
 def index_range(page: int, page_size: int) -> Tuple[int]:
@@ -17,7 +16,7 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """Initialise data"""
+        """Initialise dataset"""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
@@ -39,3 +38,20 @@ class Server:
         start, end = index_range(page, page_size)
         data = self.dataset()
         return data[start: end]
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Union[int, List[List], None]]:
+        """Hyper pagination"""
+        data = self.get_page(page, page_size)
+        _, end_index = index_range(page, page_size)
+        total_pages = (len(self.dataset()) + page_size - 1) // page_size
+        page_size = len(data)
+        next_page = page + 1 if end_index < len(self.dataset()) else None
+        prev_page = (page - 1) or None
+        return {
+            "page_size": page_size,
+            "page": page,
+            "data": data,
+            "next_page": next_page,
+            "prev_page": prev_page,
+            "total_pages": total_pages
+        }
