@@ -3,7 +3,7 @@ import csv
 from typing import Dict, List, Tuple, Union
 
 
-def index_range(page: int, page_size: int) -> Tuple[int]:
+def index_range(page: int, page_size: int) -> Tuple[int, ...]:
     """Generate list index range based on pagination params"""
     start_index = page_size * (page - 1)
     end_index = start_index + page_size
@@ -39,7 +39,8 @@ class Server:
         data = self.dataset()
         return data[start: end]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Union[int, List[List], None]]:
+    def get_hyper(self, page: int = 1, page_size: int = 10
+                  ) -> Dict[str, Union[int, List[List], None]]:
         """Hyper pagination"""
         data = self.get_page(page, page_size)
         _, end_index = index_range(page, page_size)

@@ -4,7 +4,7 @@ import math
 from typing import List, Tuple
 
 
-def index_range(page: int, page_size: int) -> Tuple[int]:
+def index_range(page: int, page_size: int) -> Tuple[int, ...]:
     """Generate list index range based on pagination params"""
     start_index = page_size * (page - 1)
     end_index = start_index + page_size
