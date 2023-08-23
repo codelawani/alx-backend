@@ -19,7 +19,7 @@ class MRUCache(BaseCaching):
             self.MRU_tracker.move_to_end(key)
         elif len(self.cache_data) >= self.MAX_ITEMS:
             most_used_key, _ = self.MRU_tracker.popitem()
-            print(f'DISCARD {most_used_key}')
+            print(f'DISCARD: {most_used_key}')
             self.cache_data.pop(most_used_key)
         self.MRU_tracker[key] = 0
         self.cache_data[key] = item
